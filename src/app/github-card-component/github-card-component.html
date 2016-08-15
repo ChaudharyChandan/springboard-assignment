@@ -1,0 +1,29 @@
+<section class="github-card-component">
+  <header>
+    <form ng-submit="ghccCtrl.addUser()" name="ghccCtrl.githubUserForm">
+      <input placeholder="github login" ng-model="ghccCtrl.username" required/>
+      <button type="submit">Add</button>
+    </form>
+    <div class="spinner" ng-class="{'active' : ghccCtrl.pending}"></div>
+    <div class="error-state">{{ghccCtrl.error}}</div>
+  </header>
+  <main>
+    <section class="sort-items">
+      <div>Sort by: </div>
+      <div ng-click="ghccCtrl.sortBy('name')" ng-class="{'active': ghccCtrl.property === 'name'}">Name<span ng-show="ghccCtrl.property == 'name' && ghccCtrl.reverse==false">&#9650;</span><span ng-show="ghccCtrl.property == 'name' && ghccCtrl.reverse==true">&#9660;</span></div>
+      <div ng-click="ghccCtrl.sortBy('location')" ng-class="{'active': ghccCtrl.property === 'location'}">Location<span ng-show="ghccCtrl.property == 'location' && ghccCtrl.reverse==false">&#9650;</span><span ng-show="ghccCtrl.property == 'location' && ghccCtrl.reverse==true">&#9660;</span></div>
+      <div ng-click="ghccCtrl.sortBy('followers')" ng-class="{'active': ghccCtrl.property === 'followers'}">Followers<span ng-show="ghccCtrl.property == 'followers' && ghccCtrl.reverse==false">&#9650;</span><span ng-show="ghccCtrl.property == 'followers' && ghccCtrl.reverse==true">&#9660;</span></div>
+    </section>
+    <section class="github-cards">
+      <a ng-repeat="user in ghccCtrl.users | orderBy: ghccCtrl.property: ghccCtrl.reverse" target="_blank" data-ng-href="{{user.html_url}}">
+        <div class="remove-btn" ng-click="ghccCtrl.removeUser($event, user.id)">&#x2715;</div>
+        <img ng-src="{{user.avatar_url}}" alt="{{user.name}}"/>
+        <div class="user-details">
+          <div ng-bind="user.name"></div>
+          <div>Location: {{user.location}}</div>
+          <div>Followers: {{user.followers}}</div>
+        </div>
+      </a>
+    </section>
+  </main>
+</section>
